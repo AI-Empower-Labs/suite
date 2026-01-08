@@ -8,7 +8,7 @@ internal sealed class AiEmpowerLabsOpenIdResource() : Resource(ResourceNames.Ope
 	public string OpenIdConfiguration => $"{Issuer}/.well-known/openid-configuration";
 	public string Issuer { get; init; } = "https://login.aiempowerlabs.com/oidc";
 	public string ClientId { get; init; } = "h8z7a4p2bt6mv474nkl3d";
-	public string ClientSecret { get; init; } = "fEBiyCbn4ORG7ctKmcpksrrTaYAWQNu1";
+	public required ParameterResource ClientSecret { get; init; } 
 }
 
 internal static class OidcRegistration
@@ -16,8 +16,15 @@ internal static class OidcRegistration
 	[ResourceRegistrationOrder(100)]
 	public static IResourceBuilder<AiEmpowerLabsOpenIdResource> Register(IDistributedApplicationBuilder builder)
 	{
+		IResourceBuilder<ParameterResource> clientSecret = builder.AddParameter(ResourceNames.OpenIdClientSecret, "fEBiyCbn4ORG7ctKmcpksrrTaYAWQNu1", secret: true);
+		
+		AiEmpowerLabsOpenIdResource oidc = new()
+		{
+			ClientSecret = clientSecret.Resource
+		};
+		
 		return builder
-			.AddResource(new AiEmpowerLabsOpenIdResource())
+			.AddResource(oidc)
 			.HideResource();
 	}
 }

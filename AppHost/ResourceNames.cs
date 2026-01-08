@@ -29,6 +29,9 @@ internal static class ResourceNames
 	public const string LangfuseSalt = $"{Langfuse}-salt";
 	public const string LibreChat = "chatflow-builder";
 	public const string LibreChatBase = "chatflow";
+	public const string LibreChatJwtRefreshSecret = $"{LibreChatBase}-jwt-refresh-secret";
+	public const string LibreChatCredsKey = $"{LibreChatBase}-creds-key";
+	public const string LibreChatCredsIv = $"{LibreChatBase}-creds-iv";
 	public const string LibreChatPostgresDatabase = $"{LibreChatBase}-postgres-database";
 	public const string LibreChatMongoDatabase = $"{LibreChatBase}-mongo-database";
 	public const string LibreChatPostgresDatabaseName = LibreChatBase;
@@ -40,6 +43,7 @@ internal static class ResourceNames
 	public const string n8nPostgresDatabase = "n8n-database";
 	public const string n8nPostgresDatabaseName = "n8n";
 	public const string OpenId = "openid";
+	public const string OpenIdClientSecret = $"{OpenId}-client-secret";
 	public const string OpenTelemetryName = "otel-collector";
 	public const string Postgres = "postgres";
 	public const string Qdrant = "vector-database";

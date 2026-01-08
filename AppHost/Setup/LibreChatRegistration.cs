@@ -52,6 +52,12 @@ internal static class LibreChatRegistration
 			.AddDatabase(ResourceNames.LibreChatPostgresDatabase, ResourceNames.LibreChatPostgresDatabaseName);
 		IResourceBuilder<ParameterResource> jwtSecret = builder
 			.AddParameter(ResourceNames.LangfuseJwtSecret, "71e417087ea6c2b948cb0ab09331dd4af2931059e6579e735ec447be41c0b163", secret: true);
+		IResourceBuilder<ParameterResource> jwtRefreshSecret = builder
+			.AddParameter(ResourceNames.LibreChatJwtRefreshSecret, "306c862dba9342bc79a2e5f88e671f46bdc82d3841faecdd5dec566fa09d9d26", secret: true);
+		IResourceBuilder<ParameterResource> credsKey = builder
+			.AddParameter(ResourceNames.LibreChatCredsKey, "069faa7fc639daf9506d02b11a521c11781d877be4faf35bfd8336895cceead9", secret: true);
+		IResourceBuilder<ParameterResource> credsIv = builder
+			.AddParameter(ResourceNames.LibreChatCredsIv, "1211786c8e0f6d3bb28568376ae8b0ab", secret: true);
 
 		IResourceBuilder<ContainerResource> ragApi = builder
 			.AddContainerEx(ResourceNames.LibreChatRag, "LIBRECHAT_RAG_IMAGE", "danny-avila/librechat-rag-api-dev-lite", "latest")
@@ -129,9 +135,9 @@ internal static class LibreChatRegistration
 			.WithEnvironment("ALLOW_ACCOUNT_DELETION", "true")
 			.WithEnvironment("ALLOW_UNVERIFIED_EMAIL_LOGIN", "false")
 			.WithEnvironment("JWT_SECRET", jwtSecret)
-			.WithEnvironment("JWT_REFRESH_SECRET", "306c862dba9342bc79a2e5f88e671f46bdc82d3841faecdd5dec566fa09d9d26")
-			.WithEnvironment("CREDS_KEY", "069faa7fc639daf9506d02b11a521c11781d877be4faf35bfd8336895cceead9")
-			.WithEnvironment("CREDS_IV", "1211786c8e0f6d3bb28568376ae8b0ab")
+			.WithEnvironment("JWT_REFRESH_SECRET", jwtRefreshSecret)
+			.WithEnvironment("CREDS_KEY", credsKey)
+			.WithEnvironment("CREDS_IV", credsIv)
 			// LLM
 			.WithEnvironment("AEL_BASE_URL", $"{studio.Resource.GetEndpoint("http")}/v1")
 			.WithEnvironment("AEL_API_KEY", "sk-not-needed")

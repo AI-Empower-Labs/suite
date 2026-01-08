@@ -1,0 +1,37 @@
+{
+    "$schema": "https://json.schemastore.org/launchsettings.json",
+    "profiles": {
+        "https": {
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "launchBrowser": false,
+            "applicationUrl": "https://suite.aiempowerlabs.localhost:17267;http://suite.aiempowerlabs.localhost:15033",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "DOTNET_ENVIRONMENT": "Development",
+                "ASPIRE_DASHBOARD_AI_DISABLED": "true",
+                "ASPIRE_DASHBOARD_OTLP_ENDPOINT_URL": "https://+:21050",
+                "ASPIRE_RESOURCE_SERVICE_ENDPOINT_URL": "https://localhost:22023",
+                "ASPIRE_DASHBOARD_TELEMETRY_OPTOUT": "true",
+                "ContainerLifetime": "Persistent",
+                "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT": "true"
+            }
+        },
+        "http": {
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "launchBrowser": false,
+            "applicationUrl": "http://suite.aiempowerlabs:15033",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "DOTNET_ENVIRONMENT": "Development",
+                "ASPIRE_DASHBOARD_AI_DISABLED": "true",
+                "ASPIRE_DASHBOARD_OTLP_ENDPOINT_URL": "http://*:19246",
+                "ASPIRE_RESOURCE_SERVICE_ENDPOINT_URL": "http://localhost:20243",
+                "ASPIRE_DASHBOARD_TELEMETRY_OPTOUT": "true",
+                "ContainerLifetime": "Persistent",
+                "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT": "true"
+            }
+        }
+    }
+}

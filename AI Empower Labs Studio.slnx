@@ -1,0 +1,10 @@
+<Solution>
+	<Folder Name="/Solution Folder/">
+		<File Path=".editorconfig" />
+		<File Path=".gitignore" />
+		<File Path="LICENSE" />
+		<File Path="nuget.config" />
+		<File Path="README.md" />
+	</Folder>
+	<Project Path="AppHost/AppHost.csproj" />
+</Solution>

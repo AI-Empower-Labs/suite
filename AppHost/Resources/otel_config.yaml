@@ -1,0 +1,134 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+  redis:
+    endpoint: ${REDIS_ENDPOINT}
+    collection_interval: 10s
+    password: ${REDIS_PASSWORD}
+  postgresql:
+    endpoint: ${POSTGRES_ENDPOINT}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    databases:
+      - ${POSTGRES_DATABASE_0}
+      - ${POSTGRES_DATABASE_1}
+      - ${POSTGRES_DATABASE_2}
+      - ${POSTGRES_DATABASE_3}
+    collection_interval: 10s
+    tls:
+      insecure: true
+      insecure_skip_verify: true
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: qdrant
+          scrape_interval: 15s
+          authorization:
+            type: Bearer
+            credentials: "${env:QDRANT_API_KEY}"
+          static_configs:
+            - targets: [ "${env:QDRANT_ENDPOINT}" ]  # Add peers as needed
+  mongodb:
+    metrics:
+      mongodb.index.access.count:
+        enabled: false
+      mongodb.index.count:
+        enabled: false
+      mongodb.index.size:
+        enabled: false
+      mongodb.collection.count:
+        enabled: false
+    hosts:
+      - endpoint: ${MONGODB_ENDPOINT}
+    username: ${MONGODB_USER}
+    password: ${MONGODB_PASSWORD}
+    collection_interval: 10s
+    initial_delay: 10s
+    tls:
+      insecure: true
+      insecure_skip_verify: true
+
+processors:
+  batch:
+  memory_limiter:
+    limit_mib: 1500
+    spike_limit_mib: 512
+    check_interval: 5s
+  filter/langfuse:
+    traces:
+      span:
+        # Drop the span if 'openinference.span.kind' is missing
+        - 'attributes["openinference.span.kind"] == nil'
+  resource/redis:
+    attributes:
+      - key: service.name
+        value: redis
+        action: upsert
+  resource/postgresql:
+    attributes:
+      - key: service.name
+        value: postgres
+        action: upsert
+  resource/mongodb:
+    attributes:
+      - key: service.name
+        value: mongodb
+        action: upsert
+
+exporters:
+  otlp/aspire:
+    endpoint: "${env:ASPIRE_ENDPOINT}"
+    headers:
+      x-otlp-api-key: ${env:ASPIRE_API_KEY}
+    tls:
+      insecure: "${env:ASPIRE_INSECURE}"
+      insecure_skip_verify: true
+  otlphttp/langfuse:
+    endpoint: "${env:LANGFUSE_OTEL_ENDPOINT}"
+    headers:
+      Authorization: "${env:LANGFUSE_AUTH_KEY}"
+
+extensions:
+  health_check:
+    endpoint: 0.0.0.0:13133
+
+service:
+  extensions: [ health_check ]
+  telemetry:
+    logs:
+      level: warn
+    metrics:
+      level: detailed
+  pipelines:
+    traces/aspire:
+      receivers: [ otlp ]
+      processors: [ memory_limiter, batch ]
+      exporters: [ otlp/aspire ]
+    traces/langfuse:
+      receivers: [ otlp ]
+      processors: [ memory_limiter, batch, filter/langfuse ]
+      exporters: [ otlphttp/langfuse ]
+    metrics:
+      receivers: [ otlp, prometheus ]
+      processors: [ memory_limiter, batch ]
+      exporters: [ otlp/aspire ]
+    metrics/redis:
+      receivers: [ redis ]
+      processors: [ memory_limiter, batch, resource/redis ]
+      exporters: [ otlp/aspire ]
+    metrics/postgresql:
+      receivers: [ postgresql ]
+      processors: [ memory_limiter, batch, resource/postgresql ]
+      exporters: [ otlp/aspire ]
+    metrics/mongodb:
+      receivers: [ mongodb ]
+      processors: [ memory_limiter, batch, resource/mongodb ]
+      exporters: [ otlp/aspire ]
+    logs:
+      receivers: [ otlp ]
+      processors: [ memory_limiter, batch ]
+      exporters: [ otlp/aspire ]

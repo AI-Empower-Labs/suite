@@ -1,0 +1,54 @@
+namespace AppHost;
+
+internal static class ResourceNames
+{
+	public const string AiEmpowerLabsApiKey = "ai-empower-labs-api-key";
+	public const string AiEmpowerLabsBaseUri = "AiEmpowerLabsBaseUri";
+	public const string Clickhouse = "clickhouse";
+	public const string ClickhousePassword = "clickhouse-password";
+	public const string CodeSandbox = "code-sandbox";
+	public const string EmbeddingModel = "embedding-model";
+	public const string Flowise = "agentic-builder";
+	public const string FlowiseApiKey = $"{Flowise}-apikey";
+	public const string FlowiseDatabaseDatabase = $"{Flowise}-database";
+	public const string FlowisePostgresDatabaseName = Flowise;
+	public const string FlowiseAdminPassword = $"{Flowise}-admin-password";
+	public const string FlowiseSecretKey = $"{Flowise}-secret-key";
+	public const string FlowiseWorker = $"{Flowise}-woirker";
+	public const string Langfuse = "langfuse";
+	public const string LangfuseBucketName = Langfuse;
+	public const string LangfuseJwtSecret = $"{Langfuse}-jwt-secret";
+	public const string LangfusePostgresDatabase = $"{Langfuse}-database";
+	public const string LangfusePostgresDatabaseName = Langfuse;
+	public const string LangfuseNextAuthSecret = $"{Langfuse}-nextauth-secret";
+	public const string LangfuseEncryptionKey = $"{Langfuse}-encryption-key";
+	public const string LangfusePublicKey = $"{Langfuse}-public-key";
+	public const string LangfuseSecretKey = $"{Langfuse}-secret-key";
+	public const string LangfuseUserPassword = $"{Langfuse}-user-password";
+	public const string LangfuseWorker = $"{Langfuse}-worker";
+	public const string LangfuseSalt = $"{Langfuse}-salt";
+	public const string LibreChat = "chatflow-builder";
+	public const string LibreChatBase = "chatflow";
+	public const string LibreChatPostgresDatabase = $"{LibreChatBase}-postgres-database";
+	public const string LibreChatMongoDatabase = $"{LibreChatBase}-mongo-database";
+	public const string LibreChatPostgresDatabaseName = LibreChatBase;
+	public const string LibreChatRag = $"{LibreChatBase}-rag";
+	public const string Mailpit = "mailpit";
+	public const string MeiliSearch = "meili-search";
+	public const string MongoDb = "mongodb";
+	public const string N8N = "n8n";
+	public const string n8nPostgresDatabase = "n8n-database";
+	public const string n8nPostgresDatabaseName = "n8n";
+	public const string OpenId = "openid";
+	public const string OpenTelemetryName = "otel-collector";
+	public const string Postgres = "postgres";
+	public const string Qdrant = "vector-database";
+	public const string Redis = "redis";
+	public const string RustFs = "rustfs";
+	public const string RustFsAccessKey = $"{RustFs}-access-key";
+	public const string RustFsSecretKey = $"{RustFs}-secret-key";
+	public const string RustFsPostgresBackupBucketName = "postgres-backups";
+	public const string SearXng = "web-search";
+	public const string Studio = "ael-studio";
+	public const string WebUI = "webui";
+}

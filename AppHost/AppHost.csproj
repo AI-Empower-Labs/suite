@@ -1,0 +1,45 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.1.0">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UserSecretsId>a61f870c-98f2-43e8-a109-e794e6fb661d</UserSecretsId>
+		<AspirePromptForApiKeys>true</AspirePromptForApiKeys>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<NoWarn>$(NoWarn);ASPIREPIPELINES001;ASPIREINTERACTION001;ASPIRECERTIFICATES001</NoWarn>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<AnalysisLevel>latest</AnalysisLevel>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Aspire.Hosting.Docker" Version="13.1.0-preview.1.25616.3" />
+		<PackageReference Include="Aspire.Hosting.MongoDB" Version="13.1.0" />
+		<PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.1.0" />
+		<PackageReference Include="Aspire.Hosting.Qdrant" Version="13.1.0" />
+		<PackageReference Include="Aspire.Hosting.Redis" Version="13.1.0" />
+		<PackageReference Include="Aspire.Hosting.Seq" Version="13.1.0" />
+		<PackageReference Include="Aspire.Hosting.Yarp" Version="13.1.0" />
+		<PackageReference Include="AWSSDK.S3" Version="4.0.15.2" />
+		<PackageReference Include="CommunityToolkit.Aspire.Hosting.MailPit" Version="13.0.0" />
+		<PackageReference Include="CommunityToolkit.Aspire.Hosting.Meilisearch" Version="13.0.0" />
+		<PackageReference Include="CommunityToolkit.Aspire.Hosting.OpenTelemetryCollector" Version="13.0.0" />
+		<PackageReference Include="Dapper" Version="2.1.66" />
+		<PackageReference Include="Npgsql" Version="10.0.1" />
+		<PackageReference Include="System.Memory.Data" Version="10.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\librechat.yaml" />
+		<EmbeddedResource Include="Resources\otel_config.yaml" />
+		<EmbeddedResource Include="Resources\searxng_settings.yaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="..\.dockerignore">
+			<Link>.dockerignore</Link>
+		</Content>
+	</ItemGroup>
+
+</Project>

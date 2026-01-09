@@ -94,7 +94,7 @@ Once running, the Aspire Dashboard provides a complete overview of all services,
 1.  Ensure your container engine (Docker) is running.
 2.  Clone the repository:
     ```bash
-    git clone [https://github.com/AI-Empower-Labs/suite](https://github.com/AI-Empower-Labs/suite)
+    git clone https://github.com/AI-Empower-Labs/suite
     cd suite
     ```
 3.  Run the AppHost project:

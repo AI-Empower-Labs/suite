@@ -16,7 +16,7 @@ internal static class RustFsRegistration
 		IResourceBuilder<ParameterResource> rustFsAccessKey = builder
 			.AddParameter(ResourceNames.RustFsAccessKey, "rustadmin", true);
 		IResourceBuilder<ParameterResource> rustFsSecretKey = builder
-			.AddParameter(ResourceNames.RustFsSecretKey, true);
+			.AddParameter(ResourceNames.RustFsSecretKey, Guid.NewGuid().ToString, true);
 
 		int port = PortAllocationHelper.GetNextAvailablePort();
 		RustFsContainerResource rustFsContainerResource = new(ResourceNames.RustFs)

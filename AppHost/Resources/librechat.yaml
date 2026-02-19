@@ -77,7 +77,7 @@ endpoints:
       modelDisplayLabel: "AI Empower Labs"
 
 mcpServers:
-  AI Empower Labs MCP:
+  AI_Empower_Labs_MCP:
     type: streamable-http
     url: "${AEL_STUDIO_MCP_URL}"
     headers:

@@ -26,6 +26,7 @@ internal static class SearXngRegistration
 			.WithUrlForEndpoint("http", static url => { url.DisplayText = "SearXng"; })
 			.WithHttpHealthCheck("/healthz", 200, "http")
 			.WithEnvironment("SEARXNG_SECRET", searXngSecret)
+			.WithEnvironment("SEARXNG_LIMITER", "false")
 			.WithBindMount("./searxng_settings.yaml", "/etc/searxng/settings.yml", true)
 			.WithCurlHttpHealthCheckEndpoint("http://localhost:8080/healthz");
 	}

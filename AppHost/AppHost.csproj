@@ -14,26 +14,33 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Aspire.Hosting.Docker" Version="13.1.1-preview.1.26105.8" />
-		<PackageReference Include="Aspire.Hosting.MongoDB" Version="13.1.1" />
-		<PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.1.1" />
-		<PackageReference Include="Aspire.Hosting.Qdrant" Version="13.1.1" />
-		<PackageReference Include="Aspire.Hosting.Redis" Version="13.1.1" />
-		<PackageReference Include="Aspire.Hosting.Seq" Version="13.1.1" />
-		<PackageReference Include="Aspire.Hosting.Yarp" Version="13.1.1" />
-		<PackageReference Include="AWSSDK.S3" Version="4.0.18.6" />
-		<PackageReference Include="CommunityToolkit.Aspire.Hosting.MailPit" Version="13.1.1" />
-		<PackageReference Include="CommunityToolkit.Aspire.Hosting.Meilisearch" Version="13.1.1" />
-		<PackageReference Include="CommunityToolkit.Aspire.Hosting.OpenTelemetryCollector" Version="13.1.1" />
-		<PackageReference Include="Dapper" Version="2.1.66" />
-		<PackageReference Include="Npgsql" Version="10.0.1" />
-		<PackageReference Include="System.Memory.Data" Version="10.0.3" />
+		<PackageReference Include="Aspire.Hosting.Docker" Version="13.1.1-preview.1.26105.8"/>
+		<PackageReference Include="Aspire.Hosting.MongoDB" Version="13.1.1"/>
+		<PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.1.1"/>
+		<PackageReference Include="Aspire.Hosting.Qdrant" Version="13.1.1"/>
+		<PackageReference Include="Aspire.Hosting.Redis" Version="13.1.1"/>
+		<PackageReference Include="Aspire.Hosting.Seq" Version="13.1.1"/>
+		<PackageReference Include="Aspire.Hosting.Yarp" Version="13.1.1"/>
+		<PackageReference Include="AWSSDK.S3" Version="4.0.18.6"/>
+		<PackageReference Include="CommunityToolkit.Aspire.Hosting.MailPit" Version="13.1.1"/>
+		<PackageReference Include="CommunityToolkit.Aspire.Hosting.Meilisearch" Version="13.1.1"/>
+		<PackageReference Include="CommunityToolkit.Aspire.Hosting.OpenTelemetryCollector" Version="13.1.1"/>
+		<PackageReference Include="Dapper" Version="2.1.66"/>
+		<PackageReference Include="Npgsql" Version="10.0.1"/>
+		<PackageReference Include="System.Memory.Data" Version="10.0.3"/>
 	</ItemGroup>
 
 	<ItemGroup>
 		<Content Include="..\.dockerignore">
 			<Link>.dockerignore</Link>
 		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\librechat.yaml"/>
+		<EmbeddedResource Include="Resources\mongo-init.js"/>
+		<EmbeddedResource Include="Resources\otel_config.yaml"/>
+		<EmbeddedResource Include="Resources\searxng_settings.yaml"/>
 	</ItemGroup>
 
 </Project>

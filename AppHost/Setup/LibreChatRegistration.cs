@@ -109,7 +109,7 @@ internal static class LibreChatRegistration
 		}
 
 		IResourceBuilder<ContainerResource> libreChatResourceBuilder = builder
-			.AddContainerEx(ResourceNames.LibreChat, "LIBRECHAT_IMAGE", "ai-empower-labs/librechat", "1.0.0")
+			.AddContainerEx(ResourceNames.LibreChat, "LIBRECHAT_IMAGE", "ai-empower-labs/librechat", "1.0.1")
 			.WithHttpEndpoint(port: 3080, targetPort: 3080).WithUrl("/", "Chatflow Builder")
 			.WithExternalHttpEndpoints()
 			.WithHttpHealthCheck("/health", 200, "http")

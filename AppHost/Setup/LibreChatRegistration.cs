@@ -24,10 +24,11 @@ internal static class LibreChatRegistration
 		File.WriteAllText("librechat.yaml", binaryData.ToString());
 
 		int port = PortAllocationHelper.GetNextAvailablePort();
+		int mongoDbPort = port++;
 		IResourceBuilder<MongoDBServerResource> mongoDb = builder
 			.AddMongoDB(ResourceNames.MongoDb, port: port++)
 			.WithDefaults()
-			.WithMongoExpress(resourceBuilder => resourceBuilder.WithHostPort(port++))
+			.WithMongoExpress(resourceBuilder => resourceBuilder.WithHostPort(mongoDbPort))
 			.WithUrlForEndpoint("tcp", static url => { url.DisplayLocation = UrlDisplayLocation.DetailsOnly; })
 			.WithDataVolume()
 			.PublishAsDockerComposeService((_, service) =>

@@ -38,7 +38,6 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="Resources\librechat.yaml"/>
-		<EmbeddedResource Include="Resources\mongo-init.js"/>
 		<EmbeddedResource Include="Resources\otel_config.yaml"/>
 		<EmbeddedResource Include="Resources\searxng_settings.yaml"/>
 	</ItemGroup>

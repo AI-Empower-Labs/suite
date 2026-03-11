@@ -13,7 +13,7 @@ internal static class RedisRegistration
 		int port = PortAllocationHelper.GetNextAvailablePort();
 		IResourceBuilder<RedisResource> resourceBuilder = builder
 			.AddRedis(ResourceNames.Redis, port: port)
-			.WithRedisCommander(x => x.WithUrlForEndpoint("http", url => url.DisplayText = "Redis Commander"))
+			.WithRedisCommander(redisCommander => redisCommander.WithUrlForEndpoint("http", url => url.DisplayText = "Redis Commander"))
 			.WithDefaults()
 			.WithIconName("fluent:database-16-regular")
 			.WithUrlForEndpoint("tcp", static url => { url.DisplayLocation = UrlDisplayLocation.DetailsOnly; })

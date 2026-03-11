@@ -21,7 +21,7 @@
             "commandName": "Project",
             "dotnetRunMessages": true,
             "launchBrowser": false,
-            "applicationUrl": "http://suite.aiempowerlabs:15033",
+            "applicationUrl": "http://suite.aiempowerlabs.localhost:15033",
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
                 "DOTNET_ENVIRONMENT": "Development",

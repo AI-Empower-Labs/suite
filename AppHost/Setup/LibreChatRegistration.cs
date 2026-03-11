@@ -27,8 +27,9 @@ internal static class LibreChatRegistration
 		int mongoDbPort = port++;
 		IResourceBuilder<MongoDBServerResource> mongoDb = builder
 			.AddMongoDB(ResourceNames.MongoDb, port: port++)
+			.WithImage("mongo", "7.0")
 			.WithDefaults()
-			.WithMongoExpress(resourceBuilder => resourceBuilder.WithHostPort(mongoDbPort))
+			.WithMongoExpress(resourceBuilder => resourceBuilder.WithDefaults().WithHostPort(mongoDbPort))
 			.WithUrlForEndpoint("tcp", static url => { url.DisplayLocation = UrlDisplayLocation.DetailsOnly; })
 			.WithDataVolume()
 			.PublishAsDockerComposeService((_, service) =>

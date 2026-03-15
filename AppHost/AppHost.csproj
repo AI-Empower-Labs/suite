@@ -21,13 +21,13 @@
 		<PackageReference Include="Aspire.Hosting.Redis" Version="13.1.2"/>
 		<PackageReference Include="Aspire.Hosting.Seq" Version="13.1.2"/>
 		<PackageReference Include="Aspire.Hosting.Yarp" Version="13.1.2"/>
-		<PackageReference Include="AWSSDK.S3" Version="4.0.18.8"/>
+		<PackageReference Include="AWSSDK.S3" Version="4.0.19" />
 		<PackageReference Include="CommunityToolkit.Aspire.Hosting.MailPit" Version="13.1.1"/>
 		<PackageReference Include="CommunityToolkit.Aspire.Hosting.Meilisearch" Version="13.1.1"/>
 		<PackageReference Include="CommunityToolkit.Aspire.Hosting.OpenTelemetryCollector" Version="13.1.1"/>
 		<PackageReference Include="Dapper" Version="2.1.72"/>
-		<PackageReference Include="Npgsql" Version="10.0.1"/>
-		<PackageReference Include="System.Memory.Data" Version="10.0.4"/>
+		<PackageReference Include="Npgsql" Version="10.0.2" />
+		<PackageReference Include="System.Memory.Data" Version="10.0.5" />
 	</ItemGroup>
 
 	<ItemGroup>

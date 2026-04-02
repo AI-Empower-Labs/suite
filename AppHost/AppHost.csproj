@@ -1,4 +1,4 @@
-<Project Sdk="Aspire.AppHost.Sdk/13.1.2">
+<Project Sdk="Aspire.AppHost.Sdk/13.2.1">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -14,18 +14,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Aspire.Hosting.Docker" Version="13.1.2-preview.1.26125.13"/>
-		<PackageReference Include="Aspire.Hosting.MongoDB" Version="13.1.2"/>
-		<PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.1.2"/>
-		<PackageReference Include="Aspire.Hosting.Qdrant" Version="13.1.2"/>
-		<PackageReference Include="Aspire.Hosting.Redis" Version="13.1.2"/>
-		<PackageReference Include="Aspire.Hosting.Seq" Version="13.1.2"/>
-		<PackageReference Include="Aspire.Hosting.Yarp" Version="13.1.2"/>
-		<PackageReference Include="AWSSDK.S3" Version="4.0.19" />
-		<PackageReference Include="CommunityToolkit.Aspire.Hosting.MailPit" Version="13.1.1"/>
-		<PackageReference Include="CommunityToolkit.Aspire.Hosting.Meilisearch" Version="13.1.1"/>
-		<PackageReference Include="CommunityToolkit.Aspire.Hosting.OpenTelemetryCollector" Version="13.1.1"/>
-		<PackageReference Include="Dapper" Version="2.1.72"/>
+		<PackageReference Include="Aspire.Hosting.Docker" Version="13.2.1" />
+		<PackageReference Include="Aspire.Hosting.MongoDB" Version="13.2.1" />
+		<PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.2.1" />
+		<PackageReference Include="Aspire.Hosting.Qdrant" Version="13.2.1" />
+		<PackageReference Include="Aspire.Hosting.Redis" Version="13.2.1" />
+		<PackageReference Include="Aspire.Hosting.Seq" Version="13.2.1" />
+		<PackageReference Include="Aspire.Hosting.Yarp" Version="13.2.1" />
+		<PackageReference Include="AWSSDK.S3" Version="4.0.20.2" />
+		<PackageReference Include="CommunityToolkit.Aspire.Hosting.MailPit" Version="13.1.1" />
+		<PackageReference Include="CommunityToolkit.Aspire.Hosting.Meilisearch" Version="13.1.1" />
+		<PackageReference Include="CommunityToolkit.Aspire.Hosting.OpenTelemetryCollector" Version="13.1.1" />
+		<PackageReference Include="Dapper" Version="2.1.72" />
 		<PackageReference Include="Npgsql" Version="10.0.2" />
 		<PackageReference Include="System.Memory.Data" Version="10.0.5" />
 	</ItemGroup>
@@ -37,9 +37,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Include="Resources\librechat.yaml"/>
-		<EmbeddedResource Include="Resources\otel_config.yaml"/>
-		<EmbeddedResource Include="Resources\searxng_settings.yaml"/>
+		<EmbeddedResource Include="Resources\librechat.yaml" />
+		<EmbeddedResource Include="Resources\otel_config.yaml" />
+		<EmbeddedResource Include="Resources\searxng_settings.yaml" />
 	</ItemGroup>
 
 </Project>

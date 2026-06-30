@@ -68,7 +68,7 @@ endpoints:
         X-Message-ID: "{{LIBRECHAT_BODY_MESSAGEID}}"
       models:
         default: ["openai/gpt-oss-120b"]
-        fetch: true
+        fetch: false
       titleConvo: true
       titleModel: "openai/gpt-oss-120b"
       summarize: true

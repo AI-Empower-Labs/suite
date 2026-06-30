@@ -24,16 +24,10 @@ internal static class AiEmpowerLabsStudioRegistration
 	public static void Register(
 		IDistributedApplicationBuilder builder,
 		[Services.ResourceName(ResourceNames.Studio)] IResourceBuilder<ContainerResource> studio,
-		[Services.ResourceName(ResourceNames.Flowise)] IResourceBuilder<FlowiseResource> flowise,
-		[Services.ResourceName(ResourceNames.AiEmpowerLabsApiKey)] IResourceBuilder<AelLlmApiParameterResource> aiEmpowerLabsApiKey)
+		[Services.ResourceName(ResourceNames.Flowise)] IResourceBuilder<FlowiseResource> flowise)
 	{
-		IResourceBuilder<ExternalServiceResource> aiEmpowerLabsBaseUri = builder
-			.AddExternalService(ResourceNames.AiEmpowerLabsBaseUri, "https://api.aiempowerlabs.com");
-
 		studio
 			.WithEnvironment("FLOWISE_BASE_URL", flowise.Resource.PrimaryEndpoint)
-			.WithEnvironment("FLOWISE_API_KEY", flowise.Resource.ApiKeyParameter)
-			.WithEnvironment("AEL_BASE_URL", aiEmpowerLabsBaseUri)
-			.WithEnvironment("AEL_API_KEY", aiEmpowerLabsApiKey);
+			.WithEnvironment("FLOWISE_API_KEY", flowise.Resource.ApiKeyParameter);
 	}
 }

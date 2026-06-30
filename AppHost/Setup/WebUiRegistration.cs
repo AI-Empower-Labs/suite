@@ -7,7 +7,7 @@ namespace AppHost.Setup;
 internal static class WebUiRegistration
 {
 	public static IResourceBuilder<ContainerResource>? Register(IDistributedApplicationBuilder builder,
-		[Services.ResourceName(ResourceNames.Studio)] IResourceBuilder<ContainerResource> studio,
+		[Services.ResourceName(ResourceNames.AiEmpowerLabsApiKey)] IResourceBuilder<AelLlmApiParameterResource> aiEmpowerLabsApiKey,
 		[Services.ResourceName(ResourceNames.SearXng)] IResourceBuilder<ContainerResource> searXng,
 		[Services.ResourceName(ResourceNames.Qdrant)] IResourceBuilder<QdrantServerResource> qdrant,
 		[Services.ResourceName(ResourceNames.EmbeddingModel)] ParameterResource embeddingModel,
@@ -31,7 +31,6 @@ internal static class WebUiRegistration
 			.WithHttpEndpoint(port: port, targetPort: 8080)
 			.WithHttpHealthCheck("/health", 200, "http")
 			.WithUrlForEndpoint("http", static url => { url.DisplayText = "Chat"; })
-			.WithReferenceRelationship(studio).WaitFor(studio)
 			.WithReferenceRelationship(searXng).WaitFor(searXng)
 			.WithReferenceRelationship(qdrant).WaitFor(qdrant)
 			.WithEnvironment("ENABLE_SIGNUP", "false")
@@ -45,8 +44,8 @@ internal static class WebUiRegistration
 			.WithEnvironment("ENABLE_OLLAMA_API", "false")
 			.WithEnvironment("ENABLE_AZURE_OPENAI_API", "false")
 			.WithEnvironment("ENABLE_OPENAI_API", "true")
-			.WithEnvironment("OPENAI_API_BASE_URL", $"{studio.Resource.GetEndpoint("http")}/v1")
-			.WithEnvironment("OPENAI_API_KEY", "sk-not-needed")
+			.WithEnvironment("OPENAI_API_BASE_URL", AiEmpowerLabsLlm.BaseUrl)
+			.WithEnvironment("OPENAI_API_KEY", aiEmpowerLabsApiKey)
 			// .WithEnvironment("TOOL_SERVER_CONNECTIONS",
 			// 	"""
 			// 	[

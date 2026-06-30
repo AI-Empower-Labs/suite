@@ -3,7 +3,6 @@ namespace AppHost;
 internal static class ResourceNames
 {
 	public const string AiEmpowerLabsApiKey = "ai-empower-labs-api-key";
-	public const string AiEmpowerLabsBaseUri = "AiEmpowerLabsBaseUri";
 	public const string Clickhouse = "clickhouse";
 	public const string ClickhousePassword = "clickhouse-password";
 	public const string CodeSandbox = "code-sandbox";
@@ -40,8 +39,6 @@ internal static class ResourceNames
 	public const string MeiliSearch = "meili-search";
 	public const string MongoDb = "mongodb";
 	public const string N8N = "n8n";
-	public const string n8nPostgresDatabase = "n8n-database";
-	public const string n8nPostgresDatabaseName = "n8n";
 	public const string OpenId = "openid";
 	public const string OpenIdClientSecret = $"{OpenId}-client-secret";
 	public const string OpenTelemetryName = "otel-collector";

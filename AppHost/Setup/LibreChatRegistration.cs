@@ -15,6 +15,7 @@ internal static class LibreChatRegistration
 		[Services.ResourceName(ResourceNames.Redis)] IResourceBuilder<RedisResource>? redis,
 		[Services.ResourceName(ResourceNames.Postgres)] IResourceBuilder<PostgresServerResource> postgres,
 		[Services.ResourceName(ResourceNames.EmbeddingModel)] ParameterResource embeddingModel,
+		[Services.ResourceName(ResourceNames.AiEmpowerLabsApiKey)] IResourceBuilder<AelLlmApiParameterResource> aiEmpowerLabsApiKey,
 		[Services.ResourceName(ResourceNames.OpenId)] IResourceBuilder<AiEmpowerLabsOpenIdResource> openId,
 		[Services.ResourceName(ResourceNames.OpenTelemetryName)] IResourceBuilder<OpenTelemetryCollectorResource> otelCollector,
 		[Services.ResourceName(ResourceNames.Mailpit)] IResourceBuilder<MailPitContainerResource>? smtp)
@@ -69,7 +70,6 @@ internal static class LibreChatRegistration
 			.WithHttpHealthCheck("/health", 200, "http")
 			.WithReferenceRelationship(mongoDb).WaitFor(mongoDb)
 			.WithReferenceRelationship(libreChatDatabase).WaitFor(libreChatDatabase)
-			.WithReferenceRelationship(studio).WaitFor(studio)
 			.WithEnvironment("HOST", "0.0.0.0")
 			.WithEnvironment("RAG_PORT", "8000")
 			.WithEnvironment("MONGO_URI", libreChatDatabaseMongoDb.Resource.UriExpression)
@@ -82,8 +82,8 @@ internal static class LibreChatRegistration
 			// LLM
 			.WithEnvironment("CHUNK_SIZE", "2048")
 			.WithEnvironment("CHUNK_OVERLAP", "200")
-			.WithEnvironment("OPENAI_BASEURL", $"{studio.Resource.GetEndpoint("http")}/v1")
-			.WithEnvironment("OPENAI_API_KEY", "sk-not-needed")
+			.WithEnvironment("OPENAI_BASEURL", AiEmpowerLabsLlm.BaseUrl)
+			.WithEnvironment("OPENAI_API_KEY", aiEmpowerLabsApiKey)
 			.WithEnvironment("EMBEDDINGS_PROVIDER", "openai")
 			.WithEnvironment("EMBEDDINGS_MODEL", embeddingModel)
 			.WithCurlHttpHealthCheckEndpoint("http://localhost:8000/health");
@@ -141,8 +141,8 @@ internal static class LibreChatRegistration
 			.WithEnvironment("CREDS_KEY", credsKey)
 			.WithEnvironment("CREDS_IV", credsIv)
 			// LLM
-			.WithEnvironment("AEL_BASE_URL", $"{studio.Resource.GetEndpoint("http")}/v1")
-			.WithEnvironment("AEL_API_KEY", "sk-not-needed")
+			.WithEnvironment("AEL_BASE_URL", AiEmpowerLabsLlm.BaseUrl)
+			.WithEnvironment("AEL_API_KEY", aiEmpowerLabsApiKey)
 			.WithEnvironment("AEL_STUDIO_MCP_URL", $"{studio.Resource.GetEndpoint("http")}/mcp")
 			// OIDC
 			.WithEnvironment("SESSION_EXPIRY", "1000 * 60 * 15")

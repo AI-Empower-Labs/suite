@@ -13,8 +13,6 @@ namespace AppHost.Setup.Langfuse;
 
 internal static class LangfuseRegistration
 {
-	private const string StudioApiKey = "sk-not-needed";
-
 	public static IResourceBuilder<LangfuseResource> Register(IDistributedApplicationBuilder builder,
 		[Services.ResourceName(ResourceNames.Clickhouse)] IResourceBuilder<ClickhouseResource> clickhouse,
 		[Services.ResourceName(ResourceNames.Postgres)] IResourceBuilder<PostgresServerResource> postgres,
@@ -22,7 +20,7 @@ internal static class LangfuseRegistration
 		[Services.ResourceName(ResourceNames.Redis)] IResourceBuilder<RedisResource> redis,
 		[Services.ResourceName(ResourceNames.Mailpit)] IResourceBuilder<MailPitContainerResource> smtp,
 		[Services.ResourceName(ResourceNames.OpenId)] IResourceBuilder<AiEmpowerLabsOpenIdResource> openId,
-		[Services.ResourceName(ResourceNames.Studio)] IResourceBuilder<ContainerResource> studio,
+		[Services.ResourceName(ResourceNames.AiEmpowerLabsApiKey)] IResourceBuilder<AelLlmApiParameterResource> aiEmpowerLabsApiKey,
 		[Services.ResourceName(ResourceNames.OpenTelemetryName)] IResourceBuilder<OpenTelemetryCollectorResource> openTelemetryCollector)
 	{
 		int port = 3802;
@@ -65,7 +63,6 @@ internal static class LangfuseRegistration
 			// Wait for dependencies
 			.WithReferenceRelationship(langfuseDb).WaitFor(postgres)
 			.WithReferenceRelationship(clickhouse).WaitFor(clickhouse)
-			.WithReferenceRelationship(studio).WaitFor(studio)
 			// Authentication Configuration ---
 			// Disable Username/Password Authentication
 			.WithEnvironment("AUTH_DISABLE_USERNAME_PASSWORD", "true")
@@ -142,7 +139,6 @@ internal static class LangfuseRegistration
 			// Postgres (primary DB)
 			rb = rb
 				.WithEnvironment("DATABASE_URL", langfuseDb.Resource.UriExpression)
-				.WithEnvironment("LANGFUSE_LLM_CONNECTION_WHITELISTED_HOST", studio.Resource.Name)
 				// ClickHouse
 				.WithEnvironment("CLICKHOUSE_URL",
 					$"http://{clickhouse.Resource.PrimaryEndpoint.Property(EndpointProperty.Host)}:{clickhouse.Resource.PrimaryEndpoint.Property(EndpointProperty.Port)}")
@@ -220,17 +216,17 @@ internal static class LangfuseRegistration
 				using HttpClient langfuseClient = new();
 				langfuseClient.DefaultRequestHeaders.Authorization = await resource.GetAuthenticationHeader(token);
 				string requestUri = $"{await resource.PrimaryEndpoint.GetValueAsync(token)}/api/public/llm-connections";
-				string? studioPort = await studio.Resource.GetEndpoint("http").Property(EndpointProperty.TargetPort).GetValueAsync(token);
-				string baseUrl = $"http://{studio.Resource.Name}:{studioPort}/v1";
+				string apiKey = await aiEmpowerLabsApiKey.Resource.GetValueAsync(token)
+					?? throw new InvalidOperationException("AI Empower Labs API key is missing.");
+				string baseUrl = AiEmpowerLabsLlm.BaseUrl;
 
 				// Retrieve models from llm provider and populate
 				List<string> customModels = [];
 				try
 				{
-					using HttpClient studioClient = new();
-					studioClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StudioApiKey);
-					string? studioHost = await studio.Resource.GetEndpoint("http").GetValueAsync(token);
-					JsonNode? modelsResponse = await studioClient.GetFromJsonAsync<JsonNode>($"{studioHost}/v1/models", token);
+					using HttpClient llmClient = new();
+					llmClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+					JsonNode? modelsResponse = await llmClient.GetFromJsonAsync<JsonNode>($"{baseUrl}/models", token);
 					if (modelsResponse?["data"] is JsonArray data)
 					{
 						foreach (JsonNode? item in data)
@@ -245,7 +241,7 @@ internal static class LangfuseRegistration
 				}
 				catch (Exception ex)
 				{
-					logger.LogWarning(ex, "Failed to retrieve models from Studio.");
+					logger.LogWarning(ex, "Failed to retrieve models from AI Empower Labs LLM API.");
 				}
 
 				HttpResponseMessage result = await langfuseClient
@@ -255,7 +251,7 @@ internal static class LangfuseRegistration
 						{
 							provider = "AI Empower Labs",
 							adapter = "openai",
-							secretKey = StudioApiKey,
+							secretKey = apiKey,
 							baseURL = baseUrl,
 							withDefaultModels = false,
 							customModels

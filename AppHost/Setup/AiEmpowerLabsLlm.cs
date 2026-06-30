@@ -7,6 +7,8 @@ namespace AppHost.Setup;
 
 internal static class AiEmpowerLabsLlm
 {
+	public const string BaseUrl = "https://llmapi.aiempowerlabs.com/v1";
+
 	[ResourceRegistrationOrder(100)]
 	public static IResourceBuilder<AelLlmApiParameterResource> Register(IDistributedApplicationBuilder builder)
 	{

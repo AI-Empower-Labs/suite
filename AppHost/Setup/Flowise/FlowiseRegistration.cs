@@ -11,6 +11,7 @@ internal static class FlowiseRegistration
 		[Services.ResourceName(ResourceNames.Redis)] IResourceBuilder<RedisResource>? redis,
 		[Services.ResourceName(ResourceNames.Qdrant)] IResourceBuilder<QdrantServerResource> qdrant,
 		[Services.ResourceName(ResourceNames.Postgres)] IResourceBuilder<PostgresServerResource> postgres,
+		[Services.ResourceName(ResourceNames.AiEmpowerLabsApiKey)] IResourceBuilder<AelLlmApiParameterResource> aiEmpowerLabsApiKey,
 		[Services.ResourceName(ResourceNames.Mailpit)] IResourceBuilder<MailPitContainerResource>? smtp,
 		[Services.ResourceName(ResourceNames.RustFs)] IResourceBuilder<RustFsContainerResource>? rustFsResourceBuilder,
 		[Services.ResourceName(ResourceNames.OpenTelemetryName)] IResourceBuilder<OpenTelemetryCollectorResource> otelCollector)
@@ -70,8 +71,7 @@ internal static class FlowiseRegistration
 			.WithOpenTelemetry(otelCollector)
 			.WithEnvironment("FLOWISE_SECRETKEY_OVERWRITE", flowiseSecretKey)
 			.WithEnvironment("APP_URL", flowiseResource.PrimaryEndpoint)
-			.WithEnvironment("AEL_STUDIO_API_KEY", "sk-not-needed")
-			.WithEnvironment("OPENAI_API_KEY", "sk-not-needed")
+			.WithEnvironment("OPENAI_API_KEY", aiEmpowerLabsApiKey)
 			.WithEnvironment("LOCAL_QDRANT_API_KEY", qdrant.Resource.ApiKeyParameter)
 			.WithEnvironment("LOCAL_POSTGRES_USER", postgres.Resource.UserNameReference)
 			.WithEnvironment("LOCAL_POSTGRES_PASSWORD", postgres.Resource.PasswordParameter)

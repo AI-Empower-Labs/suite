@@ -12,6 +12,7 @@ internal static class AiEmpowerLabsStudioRegistration
 		return builder
 			.AddContainerEx(ResourceNames.Studio, "AEL_STUDIO_IMAGE", "ai-empower-labs/ael-studio", "1.0.1")
 			.WithDefaults()
+			.HideResource()
 			.WithHttpEndpoint(port: PortAllocationHelper.GetNextAvailablePort(), targetPort: 8080)
 			.WithEnvironment("ASPNETCORE_URLS", "http://*:8080")
 			.WithEnvironment("DISABLE_TLS_CERT_VALIDATION", "true")

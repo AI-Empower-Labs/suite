@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json.Nodes;
 
@@ -12,6 +13,8 @@ namespace AppHost.Setup.Langfuse;
 
 internal static class LangfuseRegistration
 {
+	private const string StudioApiKey = "sk-not-needed";
+
 	public static IResourceBuilder<LangfuseResource> Register(IDistributedApplicationBuilder builder,
 		[Services.ResourceName(ResourceNames.Clickhouse)] IResourceBuilder<ClickhouseResource> clickhouse,
 		[Services.ResourceName(ResourceNames.Postgres)] IResourceBuilder<PostgresServerResource> postgres,
@@ -139,6 +142,7 @@ internal static class LangfuseRegistration
 			// Postgres (primary DB)
 			rb = rb
 				.WithEnvironment("DATABASE_URL", langfuseDb.Resource.UriExpression)
+				.WithEnvironment("LANGFUSE_LLM_CONNECTION_WHITELISTED_HOST", studio.Resource.Name)
 				// ClickHouse
 				.WithEnvironment("CLICKHOUSE_URL",
 					$"http://{clickhouse.Resource.PrimaryEndpoint.Property(EndpointProperty.Host)}:{clickhouse.Resource.PrimaryEndpoint.Property(EndpointProperty.Port)}")
@@ -213,8 +217,8 @@ internal static class LangfuseRegistration
 		{
 			try
 			{
-				using HttpClient client = new();
-				client.DefaultRequestHeaders.Authorization = await resource.GetAuthenticationHeader(token);
+				using HttpClient langfuseClient = new();
+				langfuseClient.DefaultRequestHeaders.Authorization = await resource.GetAuthenticationHeader(token);
 				string requestUri = $"{await resource.PrimaryEndpoint.GetValueAsync(token)}/api/public/llm-connections";
 				string? studioPort = await studio.Resource.GetEndpoint("http").Property(EndpointProperty.TargetPort).GetValueAsync(token);
 				string baseUrl = $"http://{studio.Resource.Name}:{studioPort}/v1";
@@ -223,8 +227,10 @@ internal static class LangfuseRegistration
 				List<string> customModels = [];
 				try
 				{
+					using HttpClient studioClient = new();
+					studioClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StudioApiKey);
 					string? studioHost = await studio.Resource.GetEndpoint("http").GetValueAsync(token);
-					JsonNode? modelsResponse = await client.GetFromJsonAsync<JsonNode>($"{studioHost}/v1/models", token);
+					JsonNode? modelsResponse = await studioClient.GetFromJsonAsync<JsonNode>($"{studioHost}/v1/models", token);
 					if (modelsResponse?["data"] is JsonArray data)
 					{
 						foreach (JsonNode? item in data)
@@ -242,19 +248,26 @@ internal static class LangfuseRegistration
 					logger.LogWarning(ex, "Failed to retrieve models from Studio.");
 				}
 
-				HttpResponseMessage result = await client
+				HttpResponseMessage result = await langfuseClient
 					.PutAsJsonAsync(
 						requestUri,
 						new
 						{
 							provider = "AI Empower Labs",
 							adapter = "openai",
-							secretKey = "sk-not-needed",
+							secretKey = StudioApiKey,
 							baseURL = baseUrl,
 							withDefaultModels = false,
 							customModels
 						}, cancellationToken: token);
-				result.EnsureSuccessStatusCode();
+				if (!result.IsSuccessStatusCode)
+				{
+					string responseBody = await result.Content.ReadAsStringAsync(token);
+					logger.LogError(
+						"Failed to create LLM connection for Langfuse. Status code: {StatusCode}. Response body: {ResponseBody}",
+						result.StatusCode,
+						responseBody);
+				}
 			}
 			catch (Exception e)
 			{

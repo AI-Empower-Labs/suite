@@ -15,7 +15,7 @@ internal static class RedisRegistration
 			.AddRedis(ResourceNames.Redis, port: port)
 			.WithRedisCommander(redisCommander => redisCommander.WithUrlForEndpoint("http", url => url.DisplayText = "Redis Commander"))
 			.WithDefaults()
-			.WithIconName("fluent:database-16-regular")
+			.WithIconName("Database")
 			.WithUrlForEndpoint("tcp", static url => { url.DisplayLocation = UrlDisplayLocation.DetailsOnly; })
 			.WithDataVolume()
 			.WithPersistence()

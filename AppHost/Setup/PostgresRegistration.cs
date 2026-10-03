@@ -16,11 +16,11 @@ internal static class PostgresRegistration
 			.AddPostgres(ResourceNames.Postgres, port: port)
 			.WithDefaults()
 			.WithImageEx("POSTGRES_IMAGE", "pgvector/pgvector", "pg17", "docker.io")
-			.WithIconName("fluent:database-16-regular")
+			.WithIconName("Database")
 			.WithUrlForEndpoint("tcp", static url => { url.DisplayLocation = UrlDisplayLocation.DetailsOnly; })
 			.WithPgWeb(resourceBuilder => resourceBuilder
 				.WithDefaults()
-				.WithIconName("fluent:database-16-regular")
+				.WithIconName("Database")
 				.WithUrlForEndpoint("http", static url => { url.DisplayText = "PgWeb Dashboard"; }))
 			.WithDataVolume()
 			.PublishAsDockerComposeService((_, service) =>
@@ -69,7 +69,7 @@ internal static class PostgresRegistration
 				.WithEnvironment("SCHEDULE", "0 2 * * *")
 				// Keep last 7 backups
 				.WithEnvironment("BACKUP_KEEP_DAYS", "31")
-				.WithIconName("fluent:cloud-backup-24-regular")
+				.WithIconName("CloudBackup")
 				.PublishAsDockerComposeService((_, service) =>
 				{
 					service.Labels.Add("restore-instructions",

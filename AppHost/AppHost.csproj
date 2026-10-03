@@ -8,6 +8,7 @@
 		<UserSecretsId>a61f870c-98f2-43e8-a109-e794e6fb661d</UserSecretsId>
 		<AspirePromptForApiKeys>true</AspirePromptForApiKeys>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<AspireUseCliBundle>true</AspireUseCliBundle>
 		<NoWarn>$(NoWarn);ASPIREPIPELINES001;ASPIREINTERACTION001;ASPIRECERTIFICATES001</NoWarn>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<AnalysisLevel>latest</AnalysisLevel>

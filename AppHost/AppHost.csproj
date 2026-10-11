@@ -1,4 +1,4 @@
-<Project Sdk="Aspire.AppHost.Sdk/13.6.0">
+<Project Sdk="Aspire.AppHost.Sdk/13.6.1">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -15,20 +15,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Aspire.Hosting.Docker" Version="13.6.0" />
-		<PackageReference Include="Aspire.Hosting.MongoDB" Version="13.6.0" />
-		<PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.6.0" />
-		<PackageReference Include="Aspire.Hosting.Qdrant" Version="13.6.0" />
-		<PackageReference Include="Aspire.Hosting.Redis" Version="13.6.0" />
-		<PackageReference Include="Aspire.Hosting.Seq" Version="13.6.0" />
-		<PackageReference Include="Aspire.Hosting.Yarp" Version="13.6.0" />
-		<PackageReference Include="AWSSDK.S3" Version="4.0.104.1" />
+		<PackageReference Include="Aspire.Hosting.Docker" Version="13.6.1" />
+		<PackageReference Include="Aspire.Hosting.MongoDB" Version="13.6.1" />
+		<PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.6.1" />
+		<PackageReference Include="Aspire.Hosting.Qdrant" Version="13.6.1" />
+		<PackageReference Include="Aspire.Hosting.Redis" Version="13.6.1" />
+		<PackageReference Include="Aspire.Hosting.Seq" Version="13.6.1" />
+		<PackageReference Include="Aspire.Hosting.Yarp" Version="13.6.1" />
+		<PackageReference Include="AWSSDK.S3" Version="4.0.104.2" />
 		<PackageReference Include="CommunityToolkit.Aspire.Hosting.MailPit" Version="13.6.0" />
 		<PackageReference Include="CommunityToolkit.Aspire.Hosting.Meilisearch" Version="13.6.0" />
 		<PackageReference Include="CommunityToolkit.Aspire.Hosting.OpenTelemetryCollector" Version="13.6.0" />
 		<PackageReference Include="Dapper" Version="2.1.89" />
 		<PackageReference Include="Npgsql" Version="10.0.3" />
-		<PackageReference Include="SharpCompress" Version="0.50.4" />
+		<PackageReference Include="SharpCompress" Version="0.50.5" />
 		<PackageReference Include="Snappier" Version="1.3.1" />
 		<PackageReference Include="System.Memory.Data" Version="10.0.12" />
 	</ItemGroup>
